@@ -1,0 +1,6 @@
+name: AutoPay
+version: '${project.version}'
+main: com.tcoded.autopay.AutoPay
+api-version: 1.13
+depend:
+  - Vault

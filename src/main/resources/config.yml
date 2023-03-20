@@ -1,0 +1,8 @@
+# -------------------------------------------------------------
+# => Config options
+# payment-interval  -   time in ticks
+# payment-amount    -   how much should be paid to the players
+# -------------------------------------------------------------
+
+payment-interval: 1200
+payment-amount: 1.0
