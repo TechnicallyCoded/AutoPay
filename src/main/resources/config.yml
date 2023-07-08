@@ -6,3 +6,5 @@
 
 payment-interval: 1200
 payment-amount: 1.0
+
+bstats: true

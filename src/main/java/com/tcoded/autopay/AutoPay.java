@@ -3,6 +3,8 @@ package com.tcoded.autopay;
 import com.tcoded.autopay.util.VaultHook;
 import com.tcoded.folialib.FoliaLib;
 import com.tcoded.folialib.impl.ServerImplementation;
+import org.bstats.bukkit.Metrics;
+import org.bstats.charts.SimplePie;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -29,6 +31,12 @@ public final class AutoPay extends JavaPlugin {
         this.foliaLib = new FoliaLib(this);
         this.schedulerImpl = foliaLib.getImpl();
         this.schedulerImpl.runTimer(this::autoPay, 20 * 50, interval * 50L, TimeUnit.MILLISECONDS);
+
+        if (this.getConfig().getBoolean("bstats", true)) {
+            Metrics metrics = new Metrics(this, 18826);
+            metrics.addCustomChart(new SimplePie("payment_interval", () -> String.valueOf(interval)));
+            metrics.addCustomChart(new SimplePie("payment_amount", () -> String.valueOf(payAmount)));
+        }
     }
 
     private void autoPay() {
@@ -41,6 +49,6 @@ public final class AutoPay extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        this.getServer().getScheduler().cancelTasks(this);
+        this.foliaLib.getImpl().cancelAllTasks();
     }
 }
